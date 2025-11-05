@@ -1,0 +1,4 @@
+// Extension to make HTTP requests
+
+// Press 'Send Request' above to make the request
+POST http://localhost:3000/
