@@ -43,6 +43,22 @@ function handlePOSTRequest(req, res) {
   console.log(res.statusCode)
 
   if (path === '/api/cursos/programacion') {
+
+    let body = '';
+
+    req.on('data', content => {
+      body += content.toString();
+    });
+
+    req.on('end', () => {
+      console.log(body);
+      console.log(typeof body);
+
+      body = JSON.parse(body);
+      console.log(typeof body);
+      console.log(body.titulo);
+    });
+
     return res.end('El servidor recibió una solicitud POST para /cursos/programacion');
   }
 
