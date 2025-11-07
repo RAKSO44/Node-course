@@ -1,38 +1,54 @@
 const http = require('http');
-const cursos = require('./cursos');
+const { infoCursos } = require('./cursos');
 
 const server = http.createServer((req, res) => {
 
   const { method } = req;
 
-  switch(method) {
+  switch (method) {
     case 'GET':
       return handleGETRequest(req, res);
+    case 'POST':
+      return handlePOSTRequest(req, res);
     default:
-      console.log(`El servidor no puede manejar la solicitud: ${method}`);
+      res.statusCode = 501;
+      res.end(`El servidor no puede manejar la solicitud: ${method}`);
   }
 });
 
 function handleGETRequest(req, res) {
+
   const path = req.url;
+  console.log(res.statusCode) // 200 OK (por defecto)
 
-  if (path === '/'){
-    res.statusCode = 200;
-    res.end(`I don't have a job yet, but this is another step to Australia`);
-    
-  } else if (path === '/cursos') {
-    res.statusCode = 200;
-    res.end(JSON.stringify(cursos.infoCursos));
+  if (path === '/') {
+    // res.statusCode = 200;
+    return res.end(`I don't have a job yet, but this is another step to Australia`);
 
-  } else if (path === '/cursos/programacion') {
-    res.statusCode = 200;
-    res.end(JSON.stringify(cursos.infoCursos.programacion));
+  } else if (path === '/api/cursos') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    return res.end(JSON.stringify(infoCursos));
+
+  } else if (path === '/api/cursos/programacion') {
+    return res.end(JSON.stringify(infoCursos.programacion));
   }
 
   res.statusCode = 404;
-  res.end('El recurso solicitado no existe');
+  return res.end('El recurso solicitado no existe');
 }
 
+function handlePOSTRequest(req, res) {
+
+  const path = req.url;
+  console.log(res.statusCode)
+
+  if (path === '/api/cursos/programacion') {
+    return res.end('El servidor recibió una solicitud POST para /cursos/programacion');
+  }
+
+  res.statusCode = 404;
+  return res.end('Error xd');
+}
 
 const PORT = 3000;
 
