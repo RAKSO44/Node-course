@@ -27,32 +27,32 @@ let infoCursos = {
       titulo: "Aprende Java",
       lenguaje: "java",
       vistas: 20000,
-      nivel: "avanzado"
+      nivel: "basico"
     },
     {
       id: 5,
       titulo: "Java Intermedio",
       lenguaje: "java",
       vistas: 45000,
-      nivel: "avanzado"
+      nivel: "intermedio"
     }],
   matematicas: [
     {
-      id: 1,
+      id: 6,
       titulo: "Aprende Álgebra Básico",
       tema: "algebra",
       vistas: 15000,
       nivel: "basico"
     },
     {
-      id: 2,
+      id: 7,
       titulo: "Aprende Álgebra Intermedio",
       tema: "algebra",
       vistas: 25000,
       nivel: "intermedio"
     },
     {
-      id: 3,
+      id: 8,
       titulo: "Aprende Geometría Avanzado",
       tema: "geometria",
       vistas: 20000,
