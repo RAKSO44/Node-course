@@ -19,20 +19,24 @@ routerProgramacion.get('/:lenguaje', (req, res) => {
   const resultados = programacion.filter(curso => curso.lenguaje === lenguaje);
 
   if (resultados.length === 0) {
-    return res.status(404).send(`No se encontraron cursos de ${lenguaje}`);
-  }
+    return res.status(404).end(); // termina la solicitud
+                                  // y envía una respuesta vacía 
+    // también podrías hacer:
+    // return res.status(404).send(`No se encontraron cursos de ${lenguaje}`);
+    // Recuerda que eso sí envía una respuesta, y cargaría en el navegador
+   }                               
 
   if (req.query.ordenar === "vistas") {
-    return res.send(resultados.sort((a, b) => b.vistas - a.vistas ));
+    return res.json(resultados.sort((a, b) => b.vistas - a.vistas ));
   }
 
-  res.send(JSON.stringify(resultados));
-});
+  res.json(resultados); // usar .json en lugar de .send asegura que
+});                     // es una altermativa para estar seguros de enviar json
 
 routerProgramacion.post('/', (req, res) => {
   let cursoNuevo = req.body
   programacion.push(cursoNuevo);
-  res.send(programacion);
+  res.json(programacion);
 });
 
 routerProgramacion.put('/:id', (req, res) => {
@@ -43,7 +47,7 @@ routerProgramacion.put('/:id', (req, res) => {
 
   if (index >= 0) {
     programacion[index] = cursoActualizado;
-    res.send(programacion);
+    res.json(programacion);
   }
 });
 
@@ -57,7 +61,7 @@ routerProgramacion.patch('/:id', (req, res) => {
     const cursoAModificar = programacion[index];
     Object.assign(cursoAModificar, infoActualizada);
   }
-  res.send(programacion);
+  res.json(programacion);
 });
 
 routerProgramacion.delete('/:id', (req, res) => {
@@ -67,7 +71,7 @@ routerProgramacion.delete('/:id', (req, res) => {
   if (index >= 0) {
     programacion.splice(index, 1); 
   }
-  res.send(programacion);
+  res.json(programacion);
 });
 
 // Exporting router
